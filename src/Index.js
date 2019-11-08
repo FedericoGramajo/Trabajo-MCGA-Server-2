@@ -1,44 +1,39 @@
 const express = require('express')
 const cors =  require('cors')
 const bodyParser = require('body-parser')
-
-const myUser = {
-  email: "federico.gramajo@gmail.com",
-  password: "123456789"
-}
-
+const mongoose = require('mongoose');
 const app = express()
+
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors())
 
 app.get("/", (req, res) => {
-  res.status(200).send("mira pelado")
+  res.status(200).send("<h1>gggggg<h1>")
 })
 
 app.post("/login", (req, res) =>{
-  console.log(req.body)
-  if (!req.body.email){
-    res.status(400).send({
-      success: false,
-      message: "email is required",
+  const myUser = {
+    email: "federico.gramajo@gmail.com",
+    password: "123456789"
+  }
+  if (req.body.email !== myUser.email) {
+    return res.status(400).send({
+      error: true,
+      message: "El Email no esta registrado"
     })
   }
-  if (!req.body.password){
-    res.status(400).send({
-      success: false,
-      message: "Password is required",
+
+  if (req.body.password !== myUser.password) {
+    return res.status(400).send({
+      error: true,
+      message: "La Contraseña no es correcta"
     })
   }
-  if (req.body.email !== myUser.email
-  || req.body.password !== myUser.password){
-    return res.status(401).send({
-      succes: false,
-      message: "user not exist"
-    })
-  }
+
   return res.status(200).send({
     success: true,
-    message: "user logged successfully",
+    message: "El usuario entro correctamente(?)",
     user: myUser
   })
 })
@@ -46,3 +41,5 @@ app.post("/login", (req, res) =>{
 app.listen(4000, () =>{
   console.log("Servidor andando en el localhost 4000")
 } )
+
+/*CLASE 08/11*/
