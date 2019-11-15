@@ -38,7 +38,7 @@ app.post("/login", (req, res) =>{
   })
 })
 
-app.listen(4000, () =>{
+app.listen(process.env.PORT || 4000, () =>{
   console.log("Servidor andando en el localhost 4000")
 } )
 
